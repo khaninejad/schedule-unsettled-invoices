@@ -1,9 +1,9 @@
-import {Customer} from '@/components/customer';
 import {ICSVReader} from '@/interfaces/ICSVReader.interface';
-import {CSVParser} from './csv-parser';
+import {ICustomer} from '@/interfaces/ICustomer.interface';
+import {CSVParser} from './csvParser';
 
 export class CSVReader implements ICSVReader {
-  async readCustomers(): Promise<Customer[]> {
+  async readCustomers(): Promise<ICustomer[]> {
     const csvParser = new CSVParser('./customers.csv');
     return await csvParser.parseCustomers();
   }

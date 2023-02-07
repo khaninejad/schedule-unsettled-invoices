@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import {Customer} from '../components/customer';
 import {CustomerRequestDto} from '../types/customer.dto';
 
-import {CSVParser} from './csv-parser';
+import {CSVParser} from './csvParser';
 
 describe('CSVParser', () => {
   it('should parse customers from a csv file', async () => {

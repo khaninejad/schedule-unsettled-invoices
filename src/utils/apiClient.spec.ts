@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ApiClient} from './api-client';
+import {ApiClient} from './apiClient';
 
 jest.mock('axios');
 

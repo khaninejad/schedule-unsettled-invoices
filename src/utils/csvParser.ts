@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import * as csv from 'csv-parser';
-import {Customer} from '../components/customer';
 import {CustomerRequestDto} from '../types/customer.dto';
+import {ICustomer} from '../interfaces/ICustomer.interface';
+import {Customer} from '../components/customer';
 
 export class CSVParser {
   private filePath: string;
@@ -10,9 +11,9 @@ export class CSVParser {
     this.filePath = filePath;
   }
 
-  public parseCustomers(): Promise<Customer[]> {
+  public parseCustomers(): Promise<ICustomer[]> {
     return new Promise((resolve, reject) => {
-      const customers: Customer[] = [];
+      const customers: ICustomer[] = [];
 
       fs.createReadStream(this.filePath)
         .pipe(csv())

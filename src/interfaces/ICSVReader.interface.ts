@@ -1,5 +1,5 @@
-import {Customer} from '@/components/customer';
+import {ICustomer} from './ICustomer.interface';
 
 export interface ICSVReader {
-  readCustomers(): Promise<Customer[]>;
+  readCustomers(): Promise<ICustomer[]>;
 }

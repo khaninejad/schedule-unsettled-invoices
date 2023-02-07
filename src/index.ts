@@ -1,5 +1,5 @@
 import {SchedulingProcess} from './components/SchedulingProcess';
-import {ApiClient} from './utils/api-client';
+import {ApiClient} from './utils/apiClient';
 import {CSVReader} from './utils/csvReader';
 
 const csvReader = new CSVReader();
