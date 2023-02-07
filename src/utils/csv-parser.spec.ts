@@ -1,13 +1,13 @@
 import * as fs from 'fs';
 import {Customer} from '../components/customer';
-import {CustomerDto} from '@/types/customer.dto';
+import {CustomerRequestDto} from '../types/customer.dto';
 
 import {CSVParser} from './csv-parser';
 
 describe('CSVParser', () => {
   it('should parse customers from a csv file', async () => {
     const filePath = 'customers.csv';
-    const customersData: CustomerDto[] = [
+    const customersData: CustomerRequestDto[] = [
       {
         email: 'test1@test.com',
         text: 'this is a message',

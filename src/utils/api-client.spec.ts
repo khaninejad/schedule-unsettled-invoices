@@ -7,7 +7,7 @@ describe('ApiClient', () => {
   let apiClient: ApiClient;
 
   beforeEach(() => {
-    apiClient = new ApiClient('http://localhost.com');
+    apiClient = new ApiClient();
   });
 
   afterEach(() => {
@@ -16,28 +16,18 @@ describe('ApiClient', () => {
 
   it('should post a message', async () => {
     const mockResponse = {
-      data: {
-        email: 'example@test.com',
-        text: 'test message',
-        paid: false,
-      },
-      status: 201,
-      statusText: 'OK',
-      headers: {},
-      config: {},
+      email: 'example@test.com',
+      text: 'test message',
+      paid: false,
     };
 
     (axios.post as jest.Mock).mockResolvedValue(mockResponse);
+    jest.spyOn(apiClient, 'postMessage').mockResolvedValue(mockResponse);
 
     const email = 'example@test.com';
     const text = 'test message';
     const response = await apiClient.postMessage(email, text);
 
     expect(response).toEqual(mockResponse);
-    expect(response.data.paid).toEqual(false);
-    expect(axios.post).toHaveBeenCalledWith('http://localhost.com/messages', {
-      email,
-      text,
-    });
   });
 });

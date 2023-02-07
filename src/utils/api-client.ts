@@ -1,21 +1,23 @@
-import axios, {AxiosResponse} from 'axios';
+import {IApiClient} from '@/interfaces/IClient.interface';
+import {CustomerResponseDto} from '@/types/customer.dto';
+import axios from 'axios';
 
-export class ApiClient {
+export class ApiClient implements IApiClient {
   private endpoint: string;
 
-  constructor(endpoint: string) {
-    this.endpoint = endpoint;
+  constructor(endpoint?: string) {
+    this.endpoint =  endpoint ?? 'http://localhost:9090';
   }
 
   public async postMessage(
     email: string,
     text: string
-  ): Promise<AxiosResponse> {
+  ): Promise<CustomerResponseDto> {
     const data = {
       email,
       text,
     };
-
-    return axios.post(`${this.endpoint}/messages`, data);
+    const res = await axios.post(`${this.endpoint}/messages`, data);
+    return res.data;
   }
 }
