@@ -12,10 +12,10 @@ export class Schedule {
 
   buildMessageQueue(): void {
     for (const customer of this.customers) {
-      for (const offset of customer.schedule) {
+      for (const offset of customer.getSchedule()) {
         const message = new Message(
-          customer.email,
-          customer.text,
+          customer.getEmail(),
+          customer.getText(),
           offset,
           false
         );
