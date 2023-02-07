@@ -1,18 +1,20 @@
-export class Message {
+import {IMessage} from '../interfaces/IMessage.interface';
+
+export class Message implements IMessage {
   email: string;
   text: string;
   scheduled_in_second: number;
-  paid: boolean;
+  is_paid: boolean;
 
   constructor(
     email: string,
     text: string,
     scheduled_in_second: number,
-    paid: false
+    is_paid: boolean
   ) {
     this.email = email;
     this.text = text;
     this.scheduled_in_second = scheduled_in_second;
-    this.paid = paid;
+    this.is_paid = is_paid;
   }
 }

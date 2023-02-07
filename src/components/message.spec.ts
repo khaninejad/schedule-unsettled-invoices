@@ -1,7 +1,8 @@
+import {IMessage} from '@/interfaces/IMessage.interface';
 import {Message} from './message';
 
 describe('Message', () => {
-  let message: Message;
+  let message: IMessage;
 
   beforeEach(() => {
     message = new Message('example@email.com', 'Hello Example', 5, false);
