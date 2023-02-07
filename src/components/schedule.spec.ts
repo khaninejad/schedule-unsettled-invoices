@@ -1,12 +1,13 @@
-import { Customer } from './customer';
-import { Schedule } from './schedule';
+import {Customer} from './customer';
+import {Schedule} from './schedule';
 
 describe('Schedule', () => {
   let customers: Customer[];
   let schedule: Schedule;
 
   beforeEach(() => {
-    customers = [      new Customer('test@example.com', 'test msg', '0s-18s'),
+    customers = [
+      new Customer('test@example.com', 'test msg', '0s-18s'),
       new Customer('test2@example.com', 'test msg2', '8s-14s-20s'),
     ];
     schedule = new Schedule(customers);
