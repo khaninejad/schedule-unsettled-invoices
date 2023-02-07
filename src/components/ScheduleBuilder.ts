@@ -1,13 +1,17 @@
+import {IScheduleBuilder} from '../interfaces/IScheduleBuilder.interface';
 import {ICustomer} from '../interfaces/ICustomer.interface';
 import {IMessageSender} from '../interfaces/IMessageSender.interface';
+import {MessageSender} from './message.sender';
+import {IMessage} from '@/interfaces/IMessage.interface';
 
-export class Schedule {
-  customers: ICustomer[];
+export class ScheduleBuilder implements IScheduleBuilder {
+  private customers: ICustomer[];
   private messageSender: IMessageSender;
 
-  constructor(customers: ICustomer[], messageSender: IMessageSender) {
+  constructor(customers: ICustomer[]) {
     this.customers = customers;
-    this.messageSender = messageSender;
+    this.messageSender = new MessageSender();
+    this.buildMessageQueue();
   }
 
   buildMessageQueue(): void {
@@ -22,5 +26,8 @@ export class Schedule {
         this.messageSender.sendMessage(message);
       }
     }
+  }
+  getMessages(): IMessage[] {
+    return this.messageSender.getMessages();
   }
 }

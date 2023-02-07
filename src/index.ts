@@ -1,4 +1,6 @@
-import {SchedulingProcess} from './components/process';
+import {SchedulingProcess} from './components/SchedulingProcess';
+import {CSVReader} from './utils/csvReader';
 
-const process = new SchedulingProcess();
+const csvReader = new CSVReader();
+const process = new SchedulingProcess(csvReader);
 process.start();

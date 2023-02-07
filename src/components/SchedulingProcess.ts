@@ -1,18 +1,20 @@
+import {IMessage} from '@/interfaces/IMessage.interface';
+import {CSVReader} from '@/utils/csvReader';
 import {ApiClient} from '../utils/api-client';
-import {CSVParser} from '../utils/csv-parser';
-import {Message} from './message';
-import {Schedule} from './schedule';
+import {ScheduleBuilder} from './ScheduleBuilder';
 
 export class SchedulingProcess {
-  private scheduledMessages: Message[] = [];
+  private scheduledMessages: IMessage[] = [];
   public intervalId: ReturnType<typeof setTimeout> = setTimeout(() => {});
+
+  constructor(private readonly csvReader: CSVReader) {}
 
   async start() {
     console.log('Process has Started');
     this.scheduledMessages = await this.readCsvAndBuildSchedule();
     console.log(
       `Total messages in Queue: ${
-        this.scheduledMessages.filter(item => !item.paid).length
+        this.scheduledMessages.filter(item => !item.is_paid).length
       }`
     );
     const client = new ApiClient('http://localhost:9090');
@@ -28,19 +30,17 @@ export class SchedulingProcess {
         clearInterval(this.intervalId);
         console.warn(
           `Failed Messages: ${
-            this.scheduledMessages.filter(item => !item.paid).length
+            this.scheduledMessages.filter(item => !item.is_paid).length
           }`
         );
       }
     }, 1000);
   }
 
-  async readCsvAndBuildSchedule(): Promise<Message[]> {
-    const csvParser = new CSVParser('./customers.csv');
-    const customers = await csvParser.parseCustomers();
-    const schedule = new Schedule(customers);
-    schedule.buildMessageQueue();
-    return schedule.messages;
+  async readCsvAndBuildSchedule(): Promise<IMessage[]> {
+    const customers = await this.csvReader.readCustomers();
+    const scheduleBuilder = new ScheduleBuilder(customers);
+    return scheduleBuilder.getMessages();
   }
 
   private async sendScheduledMessages(
@@ -52,11 +52,11 @@ export class SchedulingProcess {
         console.log(`Sending message: "${message.text}" to ${message.email}`);
         const response = await client.postMessage(message.email, message.text);
         if (response.data) {
-          message.paid = response.data.paid;
+          message.is_paid = response.data.paid as boolean;
         }
         console.log(
           `messages in Queue: ${
-            this.scheduledMessages.filter(item => !item.paid).length
+            this.scheduledMessages.filter(item => !item.is_paid).length
           }`
         );
       }
