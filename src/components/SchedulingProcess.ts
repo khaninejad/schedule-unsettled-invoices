@@ -1,6 +1,6 @@
 import {IApiClient} from '@/interfaces/IClient.interface';
+import { ICSVReader } from '@/interfaces/ICSVReader.interface';
 import {IMessage} from '@/interfaces/IMessage.interface';
-import {CSVReader} from '@/utils/csvReader';
 import {ScheduleBuilder} from './ScheduleBuilder';
 
 export class SchedulingProcess {
@@ -8,7 +8,7 @@ export class SchedulingProcess {
   public intervalId: ReturnType<typeof setTimeout> = setTimeout(() => {});
 
   constructor(
-    private readonly csvReader: CSVReader,
+    private readonly csvReader: ICSVReader,
     private readonly apiClient: IApiClient
   ) {}
 
