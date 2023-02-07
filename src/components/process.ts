@@ -1,26 +1,36 @@
-import { ApiClient } from "../utils/api-client";
-import { CSVParser } from "../utils/csv-parser";
-import { Message } from "./message";
-import { Schedule } from "./schedule";
+import {ApiClient} from '../utils/api-client';
+import {CSVParser} from '../utils/csv-parser';
+import {Message} from './message';
+import {Schedule} from './schedule';
 
 export class SchedulingProcess {
-  private scheduledMessages: Message[]= [];
-  public intervalId: any;
+  private scheduledMessages: Message[] = [];
+  public intervalId: ReturnType<typeof setTimeout> = setTimeout(() => {});
 
   async start() {
     console.log('Process has Started');
     this.scheduledMessages = await this.readCsvAndBuildSchedule();
-    console.log(`Total messages in Queue: ${this.scheduledMessages.filter(item => !item.paid).length}`);
+    console.log(
+      `Total messages in Queue: ${
+        this.scheduledMessages.filter(item => !item.paid).length
+      }`
+    );
     const client = new ApiClient('http://localhost:9090');
 
     let currentSecond = 0;
     this.intervalId = setInterval(() => {
       this.sendScheduledMessages(currentSecond, client);
       currentSecond++;
-      const maxSecond = Math.max(...this.scheduledMessages.map(m => m.scheduled_in_second));
+      const maxSecond = Math.max(
+        ...this.scheduledMessages.map(m => m.scheduled_in_second)
+      );
       if (currentSecond > maxSecond) {
         clearInterval(this.intervalId);
-        console.warn(`Failed Messages: ${this.scheduledMessages.filter(item => !item.paid).length}`);
+        console.warn(
+          `Failed Messages: ${
+            this.scheduledMessages.filter(item => !item.paid).length
+          }`
+        );
       }
     }, 1000);
   }
@@ -33,7 +43,10 @@ export class SchedulingProcess {
     return schedule.messages;
   }
 
-  private async sendScheduledMessages(currentSecond: number, client: ApiClient) {
+  private async sendScheduledMessages(
+    currentSecond: number,
+    client: ApiClient
+  ) {
     for (const message of this.scheduledMessages) {
       if (message.scheduled_in_second === currentSecond) {
         console.log(`Sending message: "${message.text}" to ${message.email}`);
@@ -41,7 +54,11 @@ export class SchedulingProcess {
         if (response.data) {
           message.paid = response.data.paid;
         }
-        console.log(`messages in Queue: ${this.scheduledMessages.filter(item => !item.paid).length}`);
+        console.log(
+          `messages in Queue: ${
+            this.scheduledMessages.filter(item => !item.paid).length
+          }`
+        );
       }
     }
   }
