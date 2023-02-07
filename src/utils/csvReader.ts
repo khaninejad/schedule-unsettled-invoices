@@ -1,5 +1,5 @@
 import {Customer} from '@/components/customer';
-import { ICSVReader } from '@/interfaces/ICSVReader.interface';
+import {ICSVReader} from '@/interfaces/ICSVReader.interface';
 import {CSVParser} from './csv-parser';
 
 export class CSVReader implements ICSVReader {

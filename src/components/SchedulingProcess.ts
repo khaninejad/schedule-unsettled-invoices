@@ -1,5 +1,5 @@
 import {IApiClient} from '@/interfaces/IClient.interface';
-import { ICSVReader } from '@/interfaces/ICSVReader.interface';
+import {ICSVReader} from '@/interfaces/ICSVReader.interface';
 import {IMessage} from '@/interfaces/IMessage.interface';
 import {ScheduleBuilder} from './ScheduleBuilder';
 
