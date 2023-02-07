@@ -6,7 +6,7 @@ export class ApiClient implements IApiClient {
   private endpoint: string;
 
   constructor(endpoint?: string) {
-    this.endpoint =  endpoint ?? 'http://localhost:9090';
+    this.endpoint = endpoint ?? 'http://localhost:9090';
   }
 
   public async postMessage(

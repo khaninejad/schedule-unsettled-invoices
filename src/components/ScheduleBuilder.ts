@@ -1,7 +1,7 @@
 import {IScheduleBuilder} from '../interfaces/IScheduleBuilder.interface';
 import {ICustomer} from '../interfaces/ICustomer.interface';
 import {IMessageSender} from '../interfaces/IMessageSender.interface';
-import {MessageSender} from './message.sender';
+import {MessageSender} from './messageSender';
 import {IMessage} from '@/interfaces/IMessage.interface';
 
 export class ScheduleBuilder implements IScheduleBuilder {
