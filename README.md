@@ -2,7 +2,7 @@
 
 This is a customer message scheduling application that allows sending messages to customers. The customer data is stored in a CSV file, and the messages are sent to the API.
 
-###Table of Contents
+### Table of Contents
 
 [Features](#Features)
 
