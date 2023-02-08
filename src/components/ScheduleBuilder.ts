@@ -16,14 +16,16 @@ export class ScheduleBuilder implements IScheduleBuilder {
 
   buildMessageQueue(): void {
     for (const customer of this.customers) {
-      for (const offset of customer.schedule) {
-        const message = {
-          email: customer.email,
-          text: customer.text,
-          scheduled_in_second: offset,
-          is_paid: false,
-        };
-        this.messageSender.sendMessage(message);
+      if (customer.schedule) {
+        for (const offset of customer.schedule) {
+          const message = {
+            email: customer.email,
+            text: customer.text,
+            scheduled_in_second: offset,
+            is_paid: false,
+          };
+          this.messageSender.sendMessage(message);
+        }
       }
     }
   }

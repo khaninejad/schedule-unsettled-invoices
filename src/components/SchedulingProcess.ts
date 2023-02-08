@@ -45,7 +45,7 @@ export class SchedulingProcess {
     return scheduleBuilder.getMessages();
   }
 
-  private async sendScheduledMessages(currentSecond: number) {
+  async sendScheduledMessages(currentSecond: number) {
     for (const message of this.scheduledMessages) {
       if (message.scheduled_in_second === currentSecond) {
         console.log(`Sending message: "${message.text}" to ${message.email}`);
