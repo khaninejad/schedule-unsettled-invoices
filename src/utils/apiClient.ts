@@ -1,3 +1,4 @@
+import Config from '../config/config';
 import {IApiClient} from '@/interfaces/IClient.interface';
 import {CustomerResponseDto} from '@/types/customer.dto';
 import axios from 'axios';
@@ -5,8 +6,8 @@ import axios from 'axios';
 export class ApiClient implements IApiClient {
   private endpoint: string;
 
-  constructor(endpoint?: string) {
-    this.endpoint = endpoint ?? 'http://localhost:9090';
+  constructor() {
+    this.endpoint = Config.endpoint;
   }
 
   public async postMessage(
