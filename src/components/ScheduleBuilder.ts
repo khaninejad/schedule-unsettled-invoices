@@ -4,16 +4,24 @@ import {IMessageSender} from '../interfaces/IMessageSender.interface';
 import {MessageSender} from './messageSender';
 import {IMessage} from '@/interfaces/IMessage.interface';
 
+/**
+ * this class is responsible to prepare and build message list
+ * @implements {IScheduleBuilder}
+ */
 export class ScheduleBuilder implements IScheduleBuilder {
   private customers: ICustomer[];
   private messageSender: IMessageSender;
-
+  /**
+   * class constructor will receive a list of customers and based on schedules will create a message list.
+   */
   constructor(customers: ICustomer[]) {
     this.customers = customers;
     this.messageSender = new MessageSender();
     this.buildMessageQueue();
   }
-
+  /**
+   * this method will iterate over customers and based on number of schedules will create a message list
+   */
   buildMessageQueue(): void {
     for (const customer of this.customers) {
       if (customer.schedule) {

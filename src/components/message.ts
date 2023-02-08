@@ -1,5 +1,8 @@
 import {IMessage} from '../interfaces/IMessage.interface';
-
+/**
+ * this class is responsible to create a instance of messages for each reminders
+ * @implements {IMessage}
+ */
 export class Message implements IMessage {
   email: string;
   text: string;

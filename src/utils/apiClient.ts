@@ -9,7 +9,9 @@ export class ApiClient implements IApiClient {
   constructor() {
     this.endpoint = Config.endpoint;
   }
-
+  /**
+   * this method will send a POST method to a external API
+   */
   public async postMessage(
     email: string,
     text: string
