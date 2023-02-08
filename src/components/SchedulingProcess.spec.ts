@@ -78,10 +78,16 @@ describe('SchedulingProcess', () => {
       schedulingProcess,
       'sendScheduledMessages'
     );
+    const readCsvAndBuildSchedule = jest.spyOn(
+      schedulingProcess,
+      'readCsvAndBuildSchedule'
+    );
 
     await schedulingProcess.start();
+    expect(readCsvAndBuildSchedule).toHaveBeenCalled();
 
     expect(start).toHaveBeenCalledTimes(1);
+
     expect(sendScheduledMessages).not.toHaveBeenCalled();
     jest.advanceTimersByTime(1000);
     expect(sendScheduledMessages).toHaveBeenCalled();
