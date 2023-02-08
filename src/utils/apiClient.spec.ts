@@ -30,4 +30,13 @@ describe('ApiClient', () => {
 
     expect(response).toEqual(mockResponse);
   });
+  it('should catch errors while posting a message', async () => {
+    const errorMessage = 'Request failed with status code 500';
+    (axios.post as jest.Mock).mockRejectedValue(new Error(errorMessage));
+    const email = 'example@example.com';
+    const text = 'test example error';
+    apiClient.postMessage(email, text).catch(error => {
+      expect(error.message).toBe(errorMessage);
+    });
+  });
 });

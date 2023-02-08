@@ -14,11 +14,16 @@ export class ApiClient implements IApiClient {
     email: string,
     text: string
   ): Promise<CustomerResponseDto> {
-    const data = {
-      email,
-      text,
-    };
-    const res = await axios.post(`${this.endpoint}/messages`, data);
-    return res.data;
+    try {
+      const data = {
+        email,
+        text,
+      };
+      const res = await axios.post(`${this.endpoint}/messages`, data);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 }
