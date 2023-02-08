@@ -22,16 +22,21 @@ export class SchedulingProcess {
     );
 
     let currentSecond = 0;
+    const maxSecond = Math.max(
+      ...this.scheduledMessages.map(m => m.scheduled_in_second)
+    );
     this.intervalId = setInterval(() => {
       this.sendScheduledMessages(currentSecond);
       currentSecond++;
-      const maxSecond = Math.max(
-        ...this.scheduledMessages.map(m => m.scheduled_in_second)
-      );
       if (currentSecond > maxSecond) {
         clearInterval(this.intervalId);
         console.warn(
           `Failed Messages: ${
+            this.scheduledMessages.filter(item => item.is_paid).length
+          }`
+        );
+        console.warn(
+          `Successful Messages: ${
             this.scheduledMessages.filter(item => !item.is_paid).length
           }`
         );
@@ -48,20 +53,22 @@ export class SchedulingProcess {
   async sendScheduledMessages(currentSecond: number) {
     for (const message of this.scheduledMessages) {
       if (message.scheduled_in_second === currentSecond) {
-        console.log(`Sending message: "${message.text}" to ${message.email}`);
-        const response = await this.apiClient.postMessage(
-          message.email,
-          message.text
-        );
-        if (response) {
-          message.is_paid = response.paid;
+        if (this.duplicateCheck(this.scheduledMessages, message.email) === 0) {
+          console.log(`Sending message to ${message.email}`);
+          const response = await this.apiClient.postMessage(
+            message.email,
+            message.text
+          );
+          if (response) {
+            message.is_paid = response.paid;
+          }
         }
-        console.log(
-          `messages in Queue: ${
-            this.scheduledMessages.filter(item => !item.is_paid).length
-          }`
-        );
       }
     }
+  }
+  duplicateCheck(message_list: IMessage[], email: string) {
+    return message_list.filter(
+      item => item.email === email && item.is_paid === true
+    ).length;
   }
 }

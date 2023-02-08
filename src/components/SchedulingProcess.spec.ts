@@ -82,6 +82,9 @@ describe('SchedulingProcess', () => {
       schedulingProcess,
       'readCsvAndBuildSchedule'
     );
+    const apiClientMock = jest
+      .spyOn(apiClient, 'postMessage')
+      .mockImplementation();
 
     await schedulingProcess.start();
     expect(readCsvAndBuildSchedule).toHaveBeenCalled();
@@ -93,5 +96,6 @@ describe('SchedulingProcess', () => {
     expect(sendScheduledMessages).toHaveBeenCalled();
     jest.advanceTimersByTime(4000);
     expect(sendScheduledMessages).toHaveBeenCalledWith(2);
+    expect(apiClientMock).toHaveBeenCalledTimes(3);
   });
 });
