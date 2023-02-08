@@ -10,8 +10,9 @@
   "scripts": {
     "lint": "gts lint",
     "clean": "gts clean",
-    "compile": "tsc",
+    "compile": "tsc && npm run copyfile",
     "start": "npx ts-node src/index.ts",
+    "copyfile": "cp ./customers.csv ./build/customers.csv",
     "fix": "gts fix",
     "test": "jest",
     "prepare": "npm run compile",
