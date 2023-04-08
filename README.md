@@ -1,6 +1,6 @@
-# Customer Message Scheduler
+# Schedule Unsettled Invoices
 
-This is a customer message scheduling application that allows sending messages to customers. The customer data is stored in a CSV file, and the messages are sent to the API.
+This is a Schedule Unsettled Invoices application that allows sending reminders to customers. The customer data is stored in a CSV file, and the messages are sent to the API.
 
 ### Table of Contents
 
